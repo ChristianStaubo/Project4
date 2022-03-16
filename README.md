@@ -2,32 +2,32 @@
 
 
 
-##Project idea
+## Project idea
 
 3D gaming hub where you can meet with other players and play 3D games.
 
 
-##List of backend models and their properties
+## List of backend models and their properties
 
 Users
-*Username
-*Password
+* Username
+* Password
 
 Leaderboard
-  *Users array
+  * Users array
 
 
 
-##React component hierachy
+## React component hierachy
 
 
 App
-  *Home
-  *SnakeGame
+  * Home
+  * SnakeGame
   
  
-##User stories
+## User stories
 
 
 
-##Wireframes
+## Wireframes
