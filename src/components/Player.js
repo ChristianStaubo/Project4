@@ -28,6 +28,10 @@ export const Player = (props) => {
   useEffect(() => api.position.subscribe((v) => (pos.current = v)), []);
 
   useFrame(() => {
+
+    //   if (pos.current[0] > 1){
+    //       console.log('greater than 1', pos.current[0])
+    //   }
     camera.position.copy(
       new Vector3(pos.current[0], pos.current[1], pos.current[2])
     );
@@ -61,7 +65,7 @@ export const Player = (props) => {
   return (
     <>
       <FPVControls />
-      <mesh ref={ref} />
+      <mesh ref={ref} pos={pos} />
     </>
   );
 };

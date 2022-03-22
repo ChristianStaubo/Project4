@@ -6,41 +6,26 @@ import {OrbitControls, Stars, Torus} from '@react-three/drei'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
 import Tourus from './components/Torus';
 import { Player } from './components/Player';
-function Box() {
-  const [ref, api] = useBox(() => ({mass: 1, position: [0,2,0]}))
-  return (
-    <mesh onClick={() => {
-      api.velocity.set(0,2,0)
-    }} ref={ref} position={[0,2,0]}>
-      <boxBufferGeometry attach='geometry' />
-      <meshLambertMaterial attach='material' color='hotpink' />
-    </mesh>
-  )
-}
+import Box from './components/Box';
+import Plane from './components/Plane';
+import { useThree, useFrame } from '@react-three/fiber';
+import Snake from './components/Snake';
+// useFrame(() => {
+  //   console.log(pos)
+  // })
 
-function Plane() {
-  const [ref] = usePlane(() => ({
-    rotation: [-Math.PI / 2,0,0],
-
-  }))
-  return (
-    <mesh position={[0,0,0]} rotation={[-Math.PI / 2,0,0]}>
-      <planeBufferGeometry attach='geometry' args={[100,100]}/>
-      <meshLambertMaterial attach='material' color='lightblue' />
-    </mesh>
-  )
-}
 function App() {
+  
   return (
    <Canvas>
      <Physics>
-      <Box position={[0,2,0]}/>
-      <Box position={[10,3,2]}/>
-      <Box position={[5,5,5]}/>
-      <Box/>
-      <Tourus />
+      <Box position={[0,5,0]} color={'hotpink'}/>
+      {/* <Box position={[10,3,2]} color={'lightgreen'}/> */}
+      {/* <Box position={[5,5,5]} color={'salmon'}/> */}
+      {/* <Box/> */}
+      <Tourus color={'red'} />
       <Player position={[0, 3, 10]} />
-    <Plane/>
+    <Plane color={'lightblue'}/>
     </Physics>
     {/* <OrbitControls /> */}
     <Stars />
@@ -50,6 +35,7 @@ function App() {
     angle={0.3}
     />
    </Canvas>
+  // <Snake />
   );
 }
 
