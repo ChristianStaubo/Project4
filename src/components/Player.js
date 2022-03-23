@@ -4,10 +4,10 @@ import { useThree, useFrame } from '@react-three/fiber';
 import { FPVControls } from './FPVControls';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Vector3 } from 'three';
-
+const torusPos = [10, 10, 10]
 const SPEED = 6;
 
-export const Player = (props) => {
+function Player (props) {
   const { camera } = useThree();
   const { moveForward, moveBackward, moveLeft, moveRight, jump } =
     useKeyboardControls();
@@ -28,8 +28,8 @@ export const Player = (props) => {
   useEffect(() => api.position.subscribe((v) => (pos.current = v)), []);
 
   useFrame(() => {
-
-    //   if (pos.current[0] > 1){
+    // console.log(pos.current[0])
+    //   if (pos.current[0] > torusPos[0]){
     //       console.log('greater than 1', pos.current[0])
     //   }
     camera.position.copy(
@@ -69,3 +69,5 @@ export const Player = (props) => {
     </>
   );
 };
+
+export default Player
