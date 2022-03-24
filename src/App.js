@@ -4,6 +4,7 @@ import Snake from './components/Snake';
 import { Route, Routes } from "react-router-dom";
 import { useState } from 'react';
 import Home from './components/Home';
+import SinglePlayerSnake from './components/SinglePlayerSnake';
 
 // useFrame(() => {
   //   console.log(pos)
@@ -21,7 +22,7 @@ function App() {
 
       <Route path='/world' element={<World currentUser={currentUser}setCurrentUser={setCurrentUser} />}></Route>
 
-      <Route path='/singleplayerSnake'></Route>
+      <Route path='/singleplayerSnake' element={ <SinglePlayerSnake />}></Route>
 
     </Routes>
   
