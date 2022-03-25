@@ -78,7 +78,7 @@ function SinglePlayerSnake() {
     if (singlePlayer !== true) {
     gameScreen.style.display = 'block'
     }
-
+    // canvas = gameScreen.current
     canvas = document.getElementById('canvas')
     ctx = canvas.getContext('2d')
     
@@ -99,7 +99,7 @@ function SinglePlayerSnake() {
       socket.current.emit('keydown', e.keyCode)
   }
 
-  init()
+  // init()
 
   function singlePlayerPaintGame(state) {
     //color board
@@ -152,14 +152,18 @@ function SinglePlayerSnake() {
       gameActive = false
   }
 
+  if (singlePlayer === true) {
+    init()
+}
   
 
-  function reset() {
-      playerNumber = null
-      gameScreen.current.style.display = 'none'
-  }
+  // function reset() {
+  //     playerNumber = null
+  //     gameScreen.current.style.display = 'none'
+  // }
     return (
       <section >
+        {/* <h1 onClick={() => startGame}>Hello</h1> */}
       <div >
 
         

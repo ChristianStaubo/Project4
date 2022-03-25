@@ -14,6 +14,7 @@ import Snake from './Snake';
   //   console.log(pos)
   // })
 function World() {
+  console.log(localStorage.currentUser)
   return (
     <Canvas>
      <Physics>
