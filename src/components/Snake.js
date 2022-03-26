@@ -18,7 +18,7 @@ function Snake() {
   const [gameCodeInputValue, setGameCodeInputValue] = useState()
 
   useEffect(() => {
-    socket.current = io('http://localhost:3000')
+    socket.current = io('http://localhost:3001')
 
     // socket.current.on("connection", () => {
     //   console.log('connected to server')
@@ -26,6 +26,7 @@ function Snake() {
 
     socket.current.on("connection", () => {
       console.log('Connected to socket')
+      
     })
     console.log('hello')
     console.log(socket)
@@ -52,11 +53,13 @@ function Snake() {
 
   //send socket telling it to create a new game
   function newGame() {
+      socket.current.emit('singlePlayer', false)
       socket.current.emit('newGame')
       init()
   }
 
   function joinGame() {
+      socket.current.emit('singlePlayer', false)
       const code = gameCodeInputValue
       //send code to socket
       socket.current.emit('joinGame', code)
@@ -92,6 +95,7 @@ function Snake() {
   function keydown(e) {
       // console.log(e.keyCode)
       socket.current.emit('keydown', e.keyCode)
+      
   }
 
   // // init()
@@ -155,6 +159,7 @@ function Snake() {
   }
 
   function handleGameCode(gameCode) {
+      console.log(gameCode)
       gameCodeDisplay.current.innerText = gameCode
   }
 
@@ -175,6 +180,8 @@ function Snake() {
       initialScreen.current.style.display = 'block'
       gameScreen.current.style.display = 'none'
   }
+
+  
     return (
       <section >
       <div >

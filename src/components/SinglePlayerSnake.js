@@ -36,7 +36,7 @@ function SinglePlayerSnake() {
 }
 
   useEffect(() => {
-    socket.current = io('http://localhost:3000')
+    socket.current = io('http://localhost:3001')
 
     // socket.current.on("connection", () => {
     //   console.log('connected to server')
@@ -152,8 +152,11 @@ function SinglePlayerSnake() {
       gameActive = false
   }
 
-  if (singlePlayer === true) {
-    init()
+//   if (singlePlayer === true) {
+//     init()
+// }
+function startGame() {
+  init()
 }
   
 
@@ -167,7 +170,7 @@ function SinglePlayerSnake() {
       <div >
 
         
-
+        <button onClick={startGame}>Play game</button>
         <div id="gameScreen" ref={gameScreen} >
           <div >
 
