@@ -28,9 +28,7 @@ function Snake() {
       console.log('Connected to socket')
       
     })
-    console.log('hello')
-    console.log(socket)
-    console.log(socket.current)
+    socket.current.emit('singlePlayer', false)
     // hideText()
   }, [])
 
@@ -126,6 +124,7 @@ function Snake() {
       for (let i = 0 ; i < snake.length ; i++){
           ctx.fillRect(snake[i].x * size, snake[i].y * size, size, size)
       }
+      
   }
 
 

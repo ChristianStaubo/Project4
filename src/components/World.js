@@ -10,6 +10,7 @@ import Box from './Box'
 import Plane from './Plane'
 import { useThree, useFrame } from '@react-three/fiber';
 import Snake from './Snake';
+import Leaderboard from './Leaderboard'
 // useFrame(() => {
   //   console.log(pos)
   // })
@@ -24,6 +25,7 @@ function World() {
       {/* <Box/> */}
       <Torus color={'red'} />
       <Player position={[0, 3, 10]} />
+      <Leaderboard />
       <Plane color={'lightblue'}/>
       </Physics>
       {/* <OrbitControls /> */}

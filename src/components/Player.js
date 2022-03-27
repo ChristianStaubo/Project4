@@ -28,6 +28,7 @@ function Player (props) {
   useEffect(() => api.position.subscribe((v) => (pos.current = v)), []);
 
   useFrame(() => {
+    // console.log(pos.current)
     // console.log(pos.current[0])
     //   if (pos.current[0] > torusPos[0]){
     //       console.log('greater than 1', pos.current[0])

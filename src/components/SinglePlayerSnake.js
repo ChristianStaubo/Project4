@@ -1,13 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react'
+import { useNavigate } from "react-router-dom";
 import * as io from 'socket.io-client'
-// import socket from 'socket.io-client/lib/socket'
 const BG_COLOR = '#231f20'
 const SNAKE_COLOR = 'red'
 const FOOD_COLOR = '#e66916'
-// let socket = io('http://localhost:3000')
 
 
 function SinglePlayerSnake() {
+  let navigate = useNavigate()
+  let currentUser = 'Spiderman'
+  let scoreCount = useRef(0)
+  let [counter,setCounter] = useState(0)
   const socket = useRef()
   const gameScreen = useRef()
   let singlePlayer = true
@@ -19,7 +22,7 @@ function SinglePlayerSnake() {
             y:10,
         },
         vel: {
-            x:1,
+            x:0,
             y:0,
         },
         snake: [
@@ -38,17 +41,16 @@ function SinglePlayerSnake() {
   useEffect(() => {
     socket.current = io('http://localhost:3001')
 
-    // socket.current.on("connection", () => {
-    //   console.log('connected to server')
-    // })
+    
 
     socket.current.on("connection", () => {
       console.log('Connected to socket')
     })
-    console.log('hello')
-    console.log(socket)
-    console.log(socket.current)
-    // hideText()
+    // socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
+    // console.log('hello')
+    // console.log(socket)
+    // console.log(socket.current)
+    init()
   }, [])
 
   // function hideText() {
@@ -59,8 +61,22 @@ function SinglePlayerSnake() {
       useEffect(() => {
         socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
         socket.current.on('gameOver', handleGameOver)
+        socket.current.on('showScore', handleShowScore)
+        socket.current.on('init', handleInit)
       }, [socket.current])
-  
+      
+      function handleInit(msg) {
+        console.log(msg)
+      }
+      
+      function handleShowScore(count) {
+        // scoreCount.current = scoreCount.current + 1
+        // setCounter(counter + 1)
+        // console.log('New count is => ', count)
+        // console.log(counter)
+        // console.log('score count', scoreCount.current)
+        console.log('This is count', count)
+      }
 
 
   
@@ -95,7 +111,7 @@ function SinglePlayerSnake() {
 }
 
   function keydown(e) {
-      // console.log(e.keyCode)
+      console.log('PRESSING')
       socket.current.emit('keydown', e.keyCode)
   }
 
@@ -113,7 +129,8 @@ function SinglePlayerSnake() {
     //color food tile
     ctx.fillStyle = FOOD_COLOR
     ctx.fillRect(food.x * size, food.y * size, size, size)
-    console.log(state.player)
+    // console.log(state.player)
+    
     //color player (snake)
     paintPlayer(state.player,size, SNAKE_COLOR)
 }
@@ -121,12 +138,20 @@ function SinglePlayerSnake() {
   function paintPlayer(playerState, size, color) {
       const snake = playerState.snake
       ctx.fillStyle = SNAKE_COLOR
-      console.log(snake)
+      // console.log('This is snake',snake)
+      // console.log(playerState)
       //color in snake
       for (let i = 0 ; i < snake.length ; i++){
           ctx.fillRect(snake[i].x * size, snake[i].y * size, size, size)
       }
+      
+
+      
+
+      
   }
+
+ 
 
 
 
@@ -136,47 +161,74 @@ function SinglePlayerSnake() {
     
     gameState = JSON.parse(gameState)
     requestAnimationFrame(() => singlePlayerPaintGame(gameState))
+    
+  
 }
   function handleGameOver(data) {
-      if (!gameActive) {
-          return
-      }
-      data = JSON.parse(data)
-
-      if (data.winner === playerNumber) {
-          alert('You win')
-      }
-      else {
-          alert('You lose')
-      }
-      gameActive = false
+      
+      console.log('GAME IS OVER')
+      handleSubmit()
   }
 
-//   if (singlePlayer === true) {
-//     init()
-// }
+
 function startGame() {
+  // window.location.reload(false);
   init()
+  socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
 }
+
+function reloadGame() {
+  window.location.reload(false);
+  init()
+  socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
+}
+
+
+
+function incrementCounter() {
+  setCounter(counter + 1)
+}
+
+const handleSubmit = (e) => {
+  
+  let score = {currentUser, counter}
+  console.log(score)
   
 
-  // function reset() {
-  //     playerNumber = null
-  //     gameScreen.current.style.display = 'none'
-  // }
+  fetch('http://localhost:4000/gameHub/singlePlayerSnake', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(score),
+    credentials: "include",
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    
+    if (res.status === 200) {
+      console.log('Succes',res)
+  }
+  else {
+    console.log('Something went wrong', res)
+  }
+})}
+
+  
     return (
       <section >
-        {/* <h1 onClick={() => startGame}>Hello</h1> */}
+       
       <div >
 
         
         <button onClick={startGame}>Play game</button>
+        <button onClick={reloadGame}>Reload game</button>
         <div id="gameScreen" ref={gameScreen} >
           <div >
 
             
 
             <canvas id="canvas"></canvas>
+            <p>Counter:{scoreCount.current}</p>
+            <p onClick={incrementCounter}>Counter:{counter}</p>
           </div>
         </div>
 
