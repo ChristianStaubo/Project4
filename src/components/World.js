@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Canvas,} from '@react-three/fiber'
 //npm i @react-three/drei
 import {OrbitControls, Stars,} from '@react-three/drei'
@@ -11,11 +11,30 @@ import Plane from './Plane'
 import { useThree, useFrame } from '@react-three/fiber';
 import Snake from './Snake';
 import Leaderboard from './Leaderboard'
+import './world.css'
+import { FPVControls } from './FPVControls'
+import { Navigate, useNavigate } from "react-router-dom";
+
 // useFrame(() => {
   //   console.log(pos)
   // })
 function World() {
+  let navigate = useNavigate()
+
   console.log(localStorage.currentUser)
+  console.log(Player.position)
+  let apple = 'apple'
+
+  // useEffect(() => {
+  //   console.log(apple)
+  //   navigate('/')
+  // },[])
+  // useEffect(() => {
+  //   if (pos.current[1] > 7){
+  //     // console.log('Jumping at', pos.current[1])
+  //     navigate('/')
+  //   }
+  // },[pos.current, navigate])
   return (
     <Canvas>
      <Physics>
@@ -26,7 +45,7 @@ function World() {
       <Torus color={'red'} />
       <Player position={[0, 3, 10]} />
       <Leaderboard />
-      <Plane color={'lightblue'}/>
+      <Plane color={'cyan'}/>
       </Physics>
       {/* <OrbitControls /> */}
       <Stars />

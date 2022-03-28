@@ -1,0 +1,25 @@
+#snakeScreen{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+#gameOverScreen{
+  position: absolute;
+    z-index: 10;
+    top: 35%;
+    left: 45%;
+    color: whitesmoke;
+  
+  
+}
+
+#initialScreen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}

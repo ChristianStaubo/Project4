@@ -1,10 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react'
 import * as io from 'socket.io-client'
-// import socket from 'socket.io-client/lib/socket'
+import './snake.css'
 const BG_COLOR = '#231f20'
 const SNAKE_COLOR = 'red'
 const FOOD_COLOR = '#e66916'
-// let socket = io('http://localhost:3000')
 
 
 function Snake() {
@@ -16,6 +15,9 @@ function Snake() {
   const gameCodeInput = useRef()
   const gameCodeDisplay = useRef()
   const [gameCodeInputValue, setGameCodeInputValue] = useState()
+  let [gameFinished, setGameFinished] = useState(false)
+  let [playerResult, setPlayerResult] = useState('Walter')
+
 
   useEffect(() => {
     socket.current = io('http://localhost:3001')
@@ -43,6 +45,7 @@ function Snake() {
         socket.current.on('gameCode', handleGameCode)
         socket.current.on('unknownGame', handleUnknownGame)
         socket.current.on('tooManyPlayers', handleTooManyPlayers)
+        socket.current.on('init',handleInit)
       }, [socket.current])
   
 
@@ -91,8 +94,8 @@ function Snake() {
   }
 
   function keydown(e) {
-      // console.log(e.keyCode)
-      socket.current.emit('keydown', e.keyCode)
+      // console.log(gameActive)
+      socket.current.emit('keydown', e.keyCode, gameActive)
       
   }
 
@@ -110,15 +113,15 @@ function Snake() {
       //color food tile
       ctx.fillStyle = FOOD_COLOR
       ctx.fillRect(food.x * size, food.y * size, size, size)
-      console.log(state.player)
+      console.log(state.players)
       //color player (snake)
       paintPlayer(state.players[0],size, SNAKE_COLOR)
-      paintPlayer(state.players[1],size, 'red')
+      paintPlayer(state.players[1],size, 'blue')
   }
 
   function paintPlayer(playerState, size, color) {
       const snake = playerState.snake
-      ctx.fillStyle = SNAKE_COLOR
+      ctx.fillStyle = color
       console.log(snake)
       //color in snake
       for (let i = 0 ; i < snake.length ; i++){
@@ -147,12 +150,13 @@ function Snake() {
           return
       }
       data = JSON.parse(data)
+      setGameFinished(true)
 
       if (data.winner === playerNumber) {
-          alert('You win')
+          setPlayerResult('Won')
       }
       else {
-          alert('You lose')
+          setPlayerResult('Lost')
       }
       gameActive = false
   }
@@ -180,9 +184,19 @@ function Snake() {
       gameScreen.current.style.display = 'none'
   }
 
+  function reloadGame() {
+    window.location.reload(false);
+    
+  }
+
   
     return (
       <section >
+        <div id='gameOverScreen' style={{display: !gameFinished ? 'none' : 'block'}}>
+      <h1>Game Over!</h1>
+      <p>You {playerResult}</p>
+      <button onClick={reloadGame}>Play again</button>
+      </div>
       <div >
 
         <div id="initialScreen" ref={initialScreen} >
@@ -217,13 +231,14 @@ function Snake() {
               </button>
           </div>
         </div>
-
+        <div id='snakeScreen'>
         <div id="gameScreen" ref={gameScreen} >
           <div >
 
             <h1>Your game code is: <span id="gameCodeDisplay" ref={gameCodeDisplay}></span></h1>
 
             <canvas id="canvas"></canvas>
+          </div>
           </div>
         </div>
 

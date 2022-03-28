@@ -4,10 +4,14 @@ import { useThree, useFrame } from '@react-three/fiber';
 import { FPVControls } from './FPVControls';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Vector3 } from 'three';
+import { useNavigate } from "react-router-dom";
+
 const torusPos = [10, 10, 10]
 const SPEED = 6;
 
 function Player (props) {
+  // let navigate = useNavigate()
+
   const { camera } = useThree();
   const { moveForward, moveBackward, moveLeft, moveRight, jump } =
     useKeyboardControls();
@@ -28,6 +32,7 @@ function Player (props) {
   useEffect(() => api.position.subscribe((v) => (pos.current = v)), []);
 
   useFrame(() => {
+    
     // console.log(pos.current)
     // console.log(pos.current[0])
     //   if (pos.current[0] > torusPos[0]){
@@ -63,6 +68,13 @@ function Player (props) {
       api.velocity.set(velocity.current[0], 8, velocity.current[2]);
     }
   });
+
+  // useEffect(() => {
+  //   if (pos.current[1] > 7){
+  //     // console.log('Jumping at', pos.current[1])
+  //     navigate('/')
+  //   }
+  // },[pos.current, navigate])
   return (
     <>
       <FPVControls />
@@ -70,5 +82,6 @@ function Player (props) {
     </>
   );
 };
+
 
 export default Player

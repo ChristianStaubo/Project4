@@ -28,10 +28,8 @@ function Home() {
         if (res.status === 200) {
           localStorage.setItem("currentUser", currentUser);
           setCurrentUser({
-            ...currentUser,
-            currentUsername: res.currentUsername,
-            currentUserId: res.currentUserId,
-          });
+            currentUser
+          })
           console.log('Local user =>', currentUser)
           console.log(localStorage)
           navigate('/world')

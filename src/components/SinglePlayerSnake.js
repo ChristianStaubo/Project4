@@ -1,9 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import * as io from 'socket.io-client'
+import './snake.css'
 const BG_COLOR = '#231f20'
 const SNAKE_COLOR = 'red'
-const FOOD_COLOR = '#e66916'
+const FOOD_COLOR = 'green'
 
 
 function SinglePlayerSnake() {
@@ -11,6 +12,7 @@ function SinglePlayerSnake() {
   let currentUser = 'Spiderman'
   let scoreCount = useRef(0)
   let [counter,setCounter] = useState(0)
+  let [gameFinished, setGameFinished] = useState(false)
   const socket = useRef()
   const gameScreen = useRef()
   let singlePlayer = true
@@ -167,7 +169,7 @@ function SinglePlayerSnake() {
   function handleGameOver(data) {
       
       console.log('GAME IS OVER')
-      handleSubmit()
+      setGameFinished(true)
   }
 
 
@@ -203,24 +205,32 @@ const handleSubmit = (e) => {
   })
   .then((res) => res.json())
   .then((res) => {
-    
-    if (res.status === 200) {
-      console.log('Succes',res)
-  }
-  else {
-    console.log('Something went wrong', res)
-  }
+    console.log(res)
+  //   if (res.status === 200) {
+  //     console.log('Succes',res)
+  // }
+  // else {
+  //   console.log('Something went wrong', res)
+  // }
 })}
+
+useEffect(() => {
+  handleSubmit()
+},[gameFinished])
 
   
     return (
-      <section >
-       
-      <div >
+      <>
+      <div id='gameOverScreen' style={{display: !gameFinished ? 'none' : 'block'}}>
+      <h1>Game Over!</h1>
+      <p>Your score was {counter}</p>
+      <button onClick={reloadGame}>Play again</button>
+      </div>
+      <div id='snakeScreen'>
 
         
-        <button onClick={startGame}>Play game</button>
-        <button onClick={reloadGame}>Reload game</button>
+        
+        
         <div id="gameScreen" ref={gameScreen} >
           <div >
 
@@ -233,7 +243,7 @@ const handleSubmit = (e) => {
         </div>
 
       </div>
-    </section>
+      </>
 
     )
 }
