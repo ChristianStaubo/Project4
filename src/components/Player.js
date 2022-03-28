@@ -11,6 +11,7 @@ const SPEED = 6;
 
 function Player (props) {
   // let navigate = useNavigate()
+  
 
   const { camera } = useThree();
   const { moveForward, moveBackward, moveLeft, moveRight, jump } =
@@ -69,12 +70,31 @@ function Player (props) {
     }
   });
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   let user = 'spiderman'
+  //   console.log(user)
+
+  //   fetch('http://localhost:4000/gameHub/gameHub', {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(user),
+  //     credentials: "include",
+  //   })
+  //   .then((res) => {
+  //     console.log(res);
+    
+  //       navigate('/')
+    
+  // })}
+  
   // useEffect(() => {
   //   if (pos.current[1] > 7){
   //     // console.log('Jumping at', pos.current[1])
-  //     navigate('/')
+  //     handleSubmit()
+      
   //   }
-  // },[pos.current, navigate])
+  // },[pos.current[1]])
   return (
     <>
       <FPVControls />

@@ -43,7 +43,8 @@ function World() {
       {/* <Box position={[5,5,5]} color={'salmon'}/> */}
       {/* <Box/> */}
       <Torus color={'red'} />
-      <Player position={[0, 3, 10]} />
+      {/* navigate={navigate} */}
+      <Player position={[0, 3, 10]}  />
       <Leaderboard />
       <Plane color={'cyan'}/>
       </Physics>

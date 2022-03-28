@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import * as io from 'socket.io-client'
 import './snake.css'
-const BG_COLOR = '#231f20'
+const BG_COLOR = 'black'
 const SNAKE_COLOR = 'red'
 const FOOD_COLOR = 'green'
 
@@ -53,6 +53,7 @@ function SinglePlayerSnake() {
     // console.log(socket)
     // console.log(socket.current)
     init()
+    socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
   }, [])
 
   // function hideText() {
@@ -77,7 +78,8 @@ function SinglePlayerSnake() {
         // console.log('New count is => ', count)
         // console.log(counter)
         // console.log('score count', scoreCount.current)
-        console.log('This is count', count)
+        setCounter(counter + 1)
+        scoreCount.current = scoreCount.current + 1
       }
 
 
@@ -131,7 +133,9 @@ function SinglePlayerSnake() {
     //color food tile
     ctx.fillStyle = FOOD_COLOR
     ctx.fillRect(food.x * size, food.y * size, size, size)
-    // console.log(state.player)
+    console.log('Score is =>',state.score)
+    scoreCount.current = state.score
+    incrementCounter(state.score)
     
     //color player (snake)
     paintPlayer(state.player,size, SNAKE_COLOR)
@@ -187,28 +191,29 @@ function reloadGame() {
 
 
 
-function incrementCounter() {
-  setCounter(counter + 1)
+function incrementCounter(score) {
+  setCounter(score)
 }
 
 const handleSubmit = (e) => {
-  
-  let score = {currentUser, counter}
-  console.log(score)
+  let score = counter
+  let user = currentUser
+  let packageToSend = {user, score}
+  console.log(packageToSend)
   
 
   fetch('http://localhost:4000/gameHub/singlePlayerSnake', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(score),
+    body: JSON.stringify(packageToSend),
     credentials: "include",
   })
-  .then((res) => res.json())
+ 
   .then((res) => {
     console.log(res)
-  //   if (res.status === 200) {
-  //     console.log('Succes',res)
-  // }
+    if (res.status === 200) {
+      console.log('Succes',res)
+  }
   // else {
   //   console.log('Something went wrong', res)
   // }
@@ -223,9 +228,10 @@ useEffect(() => {
       <>
       <div id='gameOverScreen' style={{display: !gameFinished ? 'none' : 'block'}}>
       <h1>Game Over!</h1>
-      <p>Your score was {counter}</p>
+      <p>Your score was {scoreCount.current - 1}</p>
       <button onClick={reloadGame}>Play again</button>
       </div>
+      <button onClick={reloadGame}>Play again</button>
       <div id='snakeScreen'>
 
         
@@ -237,8 +243,7 @@ useEffect(() => {
             
 
             <canvas id="canvas"></canvas>
-            <p>Counter:{scoreCount.current}</p>
-            <p onClick={incrementCounter}>Counter:{counter}</p>
+            <p>Count: {counter}</p>
           </div>
         </div>
 

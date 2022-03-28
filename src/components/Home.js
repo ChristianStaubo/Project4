@@ -16,13 +16,12 @@ function Home() {
       let user = {currentUser}
       console.log(user)
 
-      fetch('http://localhost:4000/gameHub', {
+      fetch('http://localhost:4000/gameHub/gameHub', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
         credentials: "include",
       })
-      .then((res) => res.json())
       .then((res) => {
         console.log(res);
         if (res.status === 200) {

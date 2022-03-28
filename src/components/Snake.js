@@ -235,7 +235,7 @@ function Snake() {
         <div id="gameScreen" ref={gameScreen} >
           <div >
 
-            <h1>Your game code is: <span id="gameCodeDisplay" ref={gameCodeDisplay}></span></h1>
+            <h1>Game code: <span id="gameCodeDisplay" ref={gameCodeDisplay}></span></h1>
 
             <canvas id="canvas"></canvas>
           </div>

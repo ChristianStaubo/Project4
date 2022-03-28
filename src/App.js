@@ -12,7 +12,8 @@ import SinglePlayerSnake from './components/SinglePlayerSnake';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
-
+  const [currentPosition, setCurrentPosition] = useState(null)
+  
   
   return (
     <Routes>
