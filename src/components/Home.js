@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from 'react'
+import { Canvas } from '@react-three/fiber';
+import './world.css'
+
+import Model from './Fox';
 function Home() {
     let navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState('')
@@ -47,6 +51,16 @@ function Home() {
           />
           <button>Submit</button>
         </form>
+        <Canvas>
+        <Suspense fallback={null}>
+        <Model />
+      </Suspense>
+      <ambientLight intensity={0.5} />
+      <spotLight
+      position={[10,15,10]}
+      angle={0.3}
+      />
+        </Canvas>
         
         
     </div>

@@ -5,7 +5,8 @@ function Tourus({color}) {
    const ref = useRef(null);
    //on every frame, change the x position of the torus so it rotates
    useFrame(() => (ref.current.rotation.x = ref.current.rotation.y += 0.01));
-
+   // useFrame(() => (ref.current.rotation.x = {Math.PI * 0.25}, ref.current.rotation.y ={Math.PI * 0.25}));
+   // rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}
    return (
       <mesh visible position={[10, 10, 10]} castShadow ref={ref}>
          <torusGeometry args={[10, 3, 16, 100]} />
