@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import {Canvas,} from '@react-three/fiber'
 //npm i @react-three/drei
 import {OrbitControls, Stars,} from '@react-three/drei'
@@ -60,7 +60,9 @@ function World() {
       <Leaderboard />
       <Plane color={'cyan'}/>
       </Physics>
-      <Model />
+      <Suspense fallback={null}>
+        <Model />
+      </Suspense>
       {/* <OrbitControls /> */}
       <Stars />
       <ambientLight intensity={0.5} />
