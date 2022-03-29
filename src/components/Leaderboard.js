@@ -1,8 +1,23 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Html} from '@react-three/drei'
 import './world.css'
 function Leaderboard() {
     const [size, set] = useState(0.5)
+    let [topscores, setTopScores] = useState()
+
+    function getTopScores() {
+      fetch('http://localhost:4000/gameHub/Leaderboard', {
+        
+      })
+      .then((res) => {
+       console.log(res)
+       console.log(res.scores)
+    })
+    }
+
+    useEffect(() => {
+      getTopScores()
+    },[])
     const [hidden, setVisible] = useState(false)
     return (
       <mesh scale={size * 2} position={[0, -2, -45]}  >

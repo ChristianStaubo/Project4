@@ -88,13 +88,13 @@ function Player (props) {
     
   // })}
   
-  // useEffect(() => {
-  //   if (pos.current[1] > 7){
-  //     // console.log('Jumping at', pos.current[1])
-  //     handleSubmit()
-      
-  //   }
-  // },[pos.current[1]])
+  useEffect(() => {
+    if (pos.current[1] > 7){
+      console.log('Jumping at', pos.current[1])
+      let teleport = true
+      localStorage.setItem('singlePlayerSnakePortalUsed', JSON.stringify(teleport))
+    }
+  },[pos.current[1]])
   return (
     <>
       <FPVControls />
