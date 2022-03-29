@@ -14,6 +14,7 @@ import Leaderboard from './Leaderboard'
 import './world.css'
 import { FPVControls } from './FPVControls'
 import { Navigate, useNavigate } from "react-router-dom";
+import Model from './Fox'
 
 // useFrame(() => {
   //   console.log(pos)
@@ -55,10 +56,11 @@ function World() {
       {/* <Box/> */}
       <Torus color={'red'} />
       {/* navigate={navigate} */}
-      <Player position={[0, 3, 10]} navigateToSinglePlayerSnake={navigateToSinglePlayerSnake}  />
+      <Player position={[0, 3, 10]}  />
       <Leaderboard />
       <Plane color={'cyan'}/>
       </Physics>
+      <Model />
       {/* <OrbitControls /> */}
       <Stars />
       <ambientLight intensity={0.5} />
