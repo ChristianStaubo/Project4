@@ -2,9 +2,10 @@ import React, { Suspense } from 'react'
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from 'react'
 import { Canvas } from '@react-three/fiber';
-import './world.css'
+import './home.css'
 
 import Model from './Fox';
+import { OrbitControls } from '@react-three/drei';
 function Home() {
     let navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState('')
@@ -39,10 +40,25 @@ function Home() {
       };
     })}
   return (
-    <div>
-        <h1>Welcome to GameHub</h1>
-        <form onSubmit={handleSubmit}>
-          <label>Username</label>
+    <>
+    <Canvas style={{display:'block', width:'500px', height:'400px', margin:'0 auto', alignItems:'center'}}>
+        <Suspense fallback={null}>
+        <Model />
+        
+      </Suspense>
+      <OrbitControls/>
+      {/* get rid of drag on orbit controls */}
+      <ambientLight intensity={0.5} />
+      <spotLight
+      position={[10,15,10]}
+      angle={0.3}
+      />
+        </Canvas>
+    <div id='gamehubHomeDiv'>
+        <h1 className='h1'>Welcome to GameHub</h1>
+        <p>Choose a username and experience the world of gamehub!</p>
+        <form id='usernameForm' onSubmit={handleSubmit}>
+          <label style={{display:'inline', paddingRight:'5%'}}>Username</label>
           <input
           type='text'
           required
@@ -51,19 +67,11 @@ function Home() {
           />
           <button>Submit</button>
         </form>
-        <Canvas>
-        <Suspense fallback={null}>
-        <Model />
-      </Suspense>
-      <ambientLight intensity={0.5} />
-      <spotLight
-      position={[10,15,10]}
-      angle={0.3}
-      />
-        </Canvas>
+        
         
         
     </div>
+    </>
   )
 }
 

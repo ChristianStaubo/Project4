@@ -37,16 +37,12 @@ function World() {
   //   }
   // },[pos.current, navigate])
 
-  useEffect(() => {
-    if (localStorage.getItem('singlePlayerSnakePortalUsed') === 'true') {
-      navigateToSinglePlayerSnake()
-    }
-  })
+  
 
-  function navigateToSinglePlayerSnake() {
-    navigate('/')
-    localStorage.setItem('singlePlayerSnakePortalUsed', 'false')
-  }
+  // function navigateToSinglePlayerSnake() {
+  //   navigate('/')
+   
+  // }
   return (
     <Canvas>
      <Physics>
@@ -56,13 +52,13 @@ function World() {
       {/* <Box/> */}
       <Torus color={'red'} />
       {/* navigate={navigate} */}
-      <Player position={[0, 3, 10]}  />
+      <Player position={[0, 3, 10]}   />
       <Leaderboard />
       <Plane color={'cyan'}/>
       </Physics>
-      <Suspense fallback={null}>
+      {/* <Suspense fallback={null}>
         <Model />
-      </Suspense>
+      </Suspense> */}
       {/* <OrbitControls /> */}
       <Stars />
       <ambientLight intensity={0.5} />

@@ -4,7 +4,7 @@ import { useThree, useFrame } from '@react-three/fiber';
 import { FPVControls } from './FPVControls';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Vector3 } from 'three';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const torusPos = [10, 10, 10]
 const SPEED = 6;
@@ -91,8 +91,9 @@ function Player (props) {
   useEffect(() => {
     if (pos.current[1] > 7){
       console.log('Jumping at', pos.current[1])
-      let teleport = true
-      localStorage.setItem('singlePlayerSnakePortalUsed', JSON.stringify(teleport))
+      // props.navigateToSinglePlayerSnake()
+      // let teleport = true
+      
     }
   },[pos.current[1]])
   return (
