@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import * as io from 'socket.io-client'
 import './snake.css'
-const BG_COLOR = '#231f20'
+const BG_COLOR = '#C0C0C0'
 const SNAKE_COLOR = 'red'
 const FOOD_COLOR = '#e66916'
 

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import {Canvas,} from '@react-three/fiber'
 //npm i @react-three/drei
 import {OrbitControls, Stars,} from '@react-three/drei'
@@ -15,17 +15,22 @@ import './world.css'
 import { FPVControls } from './FPVControls'
 import { Navigate, useNavigate } from "react-router-dom";
 import Model from './Fox'
+import SnakeTitleBoard from './SnakeTitleBoard'
+import axios from 'axios'
 
 // useFrame(() => {
   //   console.log(pos)
   // })
 function World() {
   let navigate = useNavigate()
+  let [topscores, setTopScores] = useState()
 
   console.log(localStorage.currentUser)
   console.log(Player.position)
   let apple = 'apple'
-
+  useEffect(() => {
+    getTopScores()
+  },[])
   // useEffect(() => {
   //   console.log(apple)
   //   navigate('/')
@@ -43,17 +48,36 @@ function World() {
   //   navigate('/')
    
   // }
+
+  const getTopScores = async () => {
+    try {
+      const res = await axios.get('http://localhost:4000/gameHub/Leaderboard')
+      console.log(res)
+      console.log(res.data)
+      setTopScores(res.data)
+      // sortTopFive()
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+
   return (
     <Canvas>
      <Physics>
-      <Box position={[0,5,0]} color={'hotpink'}/>
-      {/* <Box position={[10,3,2]} color={'lightgreen'}/> */}
+      <Box position={[0,5,0]} color={'hotpink'} scale={1} mass={1}/>
+      {/* <Box position={[26, 1, -23]} color={'lightgreen'} scale={2} mass={1}/> */}
       {/* <Box position={[5,5,5]} color={'salmon'}/> */}
       {/* <Box/> */}
-      <Torus color={'red'} />
+      
+      <Torus color={'red'} position={[35, 1, -23]} />
+      {/* <SnakeTitleBoard position={[35, 1, -23]} text={'hello'} /> */}
+      <Torus color={'blue'} position={[-42,1,-28]} />
+      {/* <SnakeTitleBoard position={[-42,1,-28]} text={'hello'} /> */}
       {/* navigate={navigate} */}
       <Player position={[0, 3, 10]}   />
-      <Leaderboard />
+      <Leaderboard topscores={topscores} />
       <Plane color={'cyan'}/>
       </Physics>
       {/* <Suspense fallback={null}>

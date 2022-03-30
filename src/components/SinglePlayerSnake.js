@@ -1,10 +1,31 @@
+import { Button } from '@mui/material';
 import React, {useEffect, useRef, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import * as io from 'socket.io-client'
 import './snake.css'
-const BG_COLOR = 'black'
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e',
+  },
+  palette: {
+    primary: {
+      main: '#0971f1',
+      darker: '#053e85',
+    },
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+    },
+  },
+});
+const BG_COLOR = '#C0C0C0'
 const SNAKE_COLOR = 'red'
 const FOOD_COLOR = 'green'
+
+
 
 
 function SinglePlayerSnake() {
@@ -223,31 +244,41 @@ useEffect(() => {
   handleSubmit()
 },[gameFinished])
 
+function returnHome() {
+  navigate('/world')
+}
+
   
     return (
       <>
       <div id='gameOverScreen' style={{display: !gameFinished ? 'none' : 'block'}}>
       <h1>Game Over!</h1>
-      <p>Your score was {scoreCount.current - 1}</p>
-      <button onClick={reloadGame}>Play again</button>
+      <p>Your score was {scoreCount.current}</p>
+      <Button onClick={reloadGame} size='small' variant="contained" color='primary' style={{marginRight:'3%'}}>Play again</Button>
+      <span>Or</span>
+      <ThemeProvider theme={theme}>
+      <Button onClick={returnHome} size='small' style={{marginLeft:'3%'}} variant="contained" color="neutral">Go back</Button>
+      </ThemeProvider>
+      {/* <button onClick={reloadGame}>Play again</button> */}
       </div>
-      <button onClick={reloadGame}>Play again</button>
+     
       <div id='snakeScreen'>
 
         
         
         
-        <div id="gameScreen" ref={gameScreen} >
+        <div id="gameScreen"  ref={gameScreen} >
           <div >
 
             
 
-            <canvas id="canvas"></canvas>
-            <p>Count: {counter}</p>
+            <canvas  id="canvas"></canvas>
+            <p style={{fontSize:'150%'}}>Score {counter}</p>
           </div>
         </div>
 
       </div>
+      
       </>
 
     )

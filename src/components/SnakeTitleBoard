@@ -1,0 +1,33 @@
+import React, {useEffect, useState} from 'react'
+import {Html} from '@react-three/drei'
+import './world.css'
+function SnakeTitleBoard({text,position}) {
+    const [size, set] = useState(0.5)
+    
+
+    
+    const [hidden, setVisible] = useState(false)
+    return (
+      <mesh scale={size * 2} position={position}  >
+        <boxGeometry />
+        <meshStandardMaterial color='red' />
+        <Html
+          style={{
+            fontSize: '400px',
+            color: 'whitesmoke'
+            
+            
+          }}
+          distanceFactor={2}
+          position={position}
+          transform
+          occlude
+          onOcclude={setVisible}>
+        <h1>{text}</h1>
+        
+        </Html>
+      </mesh>
+    )
+  }
+
+export default SnakeTitleBoard

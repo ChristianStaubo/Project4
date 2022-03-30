@@ -8,6 +8,11 @@ import './home.css'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei';
+import { Button, Fab, IconButton, TextField,} from '@mui/material';
+import { PhotoCamera } from '@mui/icons-material';
+import NavigationIcon from '@mui/icons-material/Navigation';
+
+// import {NavigationIcon} from '@mui/icons-material'
 
 function Model({ ...props }) {
   const group = useRef()
@@ -87,9 +92,10 @@ function Home() {
           navigate('/world')
       };
     })}
-    console.log(OrbitControls)
+    
   return (
     <>
+    
     <Canvas style={{display:'block', width:'500px', height:'400px', margin:'0 auto', alignItems:'center'}}>
         <Suspense fallback={null}>
         <Model  />
@@ -108,13 +114,17 @@ function Home() {
         <p>Choose a username and experience the world of gamehub!</p>
         <form id='usernameForm' onSubmit={handleSubmit}>
           <label style={{display:'inline', paddingRight:'5%'}}>Username</label>
-          <input
+          <TextField id="outlined-basic" label="Username" style={{color:'white'}} value={currentUser} variant="filled" onChange={(e) => setCurrentUser(e.target.value)} />
+          {/* <input
           type='text'
           required
-          value={currentUser}
-          onChange={(e) => setCurrentUser(e.target.value)}
-          />
-          <button>Submit</button>
+          
+          
+          /> */}
+          <Button onClick={handleSubmit} variant="contained" size="small" color="action" endIcon={<NavigationIcon size="small"  />}>
+  Send
+</Button>
+          {/* <button>Submit</button> */}
         </form>
         
         
