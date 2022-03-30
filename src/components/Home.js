@@ -1,20 +1,68 @@
 import React, { Suspense } from 'react'
 import { useNavigate } from "react-router-dom";
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import { Canvas } from '@react-three/fiber';
 import './home.css'
 
-import Model from './Fox';
+// import Model from './Fox';
+import { useGLTF, useAnimations } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei';
+
+function Model({ ...props }) {
+  const group = useRef()
+  const { nodes, materials, animations } = useGLTF('/fox.gltf')
+  const { actions } = useAnimations(animations, group)
+  let [isRunning,setIsRunning] = useState(false)
+  useEffect(() => {
+    console.log(actions)
+    console.log(group)
+    actions.Run.play()
+    // actions.Survey.play()
+    // actions.Walk.play()
+    
+  })
+  useFrame(() => {
+    group.current.rotation.y += 0.01
+  })
+//   scale={0.01}
+  function toggleRun() {
+      isRunning = !isRunning
+      console.log(isRunning)
+      console.log('I am ', actions)
+      if (isRunning) {
+          actions.Run.stop()
+          actions.Survey.play()
+      }
+      else {
+          actions.Survey.stop()
+          actions.Run.play()
+      }
+  }
+  return (
+    <group ref={group} {...props} dispose={null} scale={0.03}  >
+      <group>
+        <group>
+          <primitive object={nodes._rootJoint} />
+          <skinnedMesh geometry={nodes.fox.geometry} material={materials.fox_material} skeleton={nodes.fox.skeleton} onClick={toggleRun}  />
+        </group>
+      </group>
+    </group>
+  )
+}
+
+
 function Home() {
     let navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState('')
-
+    
     // useEffect(() => {
     //     if (currentUser) {
     //         navigate('/world')
     //     }
     // })
+
+    
 
     const handleSubmit = (e) => {
       e.preventDefault()
@@ -39,14 +87,15 @@ function Home() {
           navigate('/world')
       };
     })}
+    console.log(OrbitControls)
   return (
     <>
     <Canvas style={{display:'block', width:'500px', height:'400px', margin:'0 auto', alignItems:'center'}}>
         <Suspense fallback={null}>
-        <Model />
+        <Model  />
         
       </Suspense>
-      <OrbitControls/>
+      <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI/2} maxPolarAngle={Math.PI/2}/>
       {/* get rid of drag on orbit controls */}
       <ambientLight intensity={0.5} />
       <spotLight
