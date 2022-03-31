@@ -58,8 +58,9 @@ function Leaderboard({topscores}) {
           occlude
           onOcclude={setVisible}>
         <h1>Snake Leaderboard</h1>
+        {topscores &&
         <h6>  <span style={{fontSize:'200%'}}>1. {topscores[0].user}          {topscores[0].score} points, </span> </h6>
-        {/* <p style={{fontSize:'200%'}}>  </p> */}
+}
         <h6>2.</h6>
         <h6>3.</h6>
         <h6>4.</h6>
