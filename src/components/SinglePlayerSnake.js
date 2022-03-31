@@ -23,7 +23,7 @@ const theme = createTheme({
 });
 const BG_COLOR = '#C0C0C0'
 const SNAKE_COLOR = 'red'
-const FOOD_COLOR = 'green'
+const FOOD_COLOR = '#66FF99'
 
 
 
@@ -62,26 +62,20 @@ function SinglePlayerSnake() {
 }
 
   useEffect(() => {
-    socket.current = io('http://localhost:3001')
+    socket.current = io(`${process.env.REACT_APP_BACKEND_SERVER}`)
 
     
 
     socket.current.on("connection", () => {
       console.log('Connected to socket')
     })
-    // socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
-    // console.log('hello')
-    // console.log(socket)
-    // console.log(socket.current)
+    
+    socket.current.emit('singlePlayer', singlePlayer)
     init()
     socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
   }, [])
 
-  // function hideText() {
-  //   initialScreen.current.style.display = 'none'
-  // }
-  // console.log(socket)
-      // socket.on('init', handleInit)
+  
       useEffect(() => {
         socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
         socket.current.on('gameOver', handleGameOver)
@@ -94,11 +88,7 @@ function SinglePlayerSnake() {
       }
       
       function handleShowScore(count) {
-        // scoreCount.current = scoreCount.current + 1
-        // setCounter(counter + 1)
-        // console.log('New count is => ', count)
-        // console.log(counter)
-        // console.log('score count', scoreCount.current)
+       
         setCounter(counter + 1)
         scoreCount.current = scoreCount.current + 1
       }
@@ -199,7 +189,7 @@ function SinglePlayerSnake() {
 
 
 function startGame() {
-  // window.location.reload(false);
+  
   init()
   socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
 }
@@ -223,7 +213,7 @@ const handleSubmit = (e) => {
   console.log(packageToSend)
   
 
-  fetch('http://localhost:4000/gameHub/singlePlayerSnake', {
+  fetch(`${process.env.REACT_APP_BACKEND_SERVER}/gameHub/singlePlayerSnake`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(packageToSend),
@@ -235,9 +225,7 @@ const handleSubmit = (e) => {
     if (res.status === 200) {
       console.log('Succes',res)
   }
-  // else {
-  //   console.log('Something went wrong', res)
-  // }
+  
 })}
 
 useEffect(() => {
@@ -259,26 +247,15 @@ function returnHome() {
       <ThemeProvider theme={theme}>
       <Button onClick={returnHome} size='small' style={{marginLeft:'3%'}} variant="contained" color="neutral">Go back</Button>
       </ThemeProvider>
-      {/* <button onClick={reloadGame}>Play again</button> */}
       </div>
-     
       <div id='snakeScreen'>
-
-        
-        
-        
         <div id="gameScreen"  ref={gameScreen} >
           <div >
-
-            
-
             <canvas  id="canvas"></canvas>
             <p style={{fontSize:'150%'}}>Score {counter}</p>
           </div>
         </div>
-
       </div>
-      
       </>
 
     )

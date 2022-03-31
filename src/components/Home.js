@@ -74,7 +74,7 @@ function Home() {
       let user = {currentUser}
       console.log(user)
 
-      fetch('http://localhost:4000/gameHub/gameHub', {
+      fetch(`${process.env.REACT_APP_BACKEND_SERVER}/gameHub/gameHub`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
