@@ -41,7 +41,7 @@ function Snake() {
 
 
   useEffect(() => {
-    socket.current = io(`${process.env.REACT_APP_BACKEND_SERVER}`)
+    socket.current = io(`${process.env.REACT_APP_SOCKET}`)
 
     // socket.current.on("connection", () => {
     //   console.log('connected to server')
