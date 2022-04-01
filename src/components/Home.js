@@ -3,58 +3,29 @@ import { useNavigate } from "react-router-dom";
 import {useState, useEffect, useRef} from 'react'
 import { Canvas } from '@react-three/fiber';
 import './home.css'
-
-// import Model from './Fox';
+import Torus from './Torus'
+import Model from './Fox';
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei';
-import { Button, Fab, IconButton, TextField,} from '@mui/material';
+import { Button, Card, CardContent, Fab, Grid, IconButton, Paper, TextField, Typography,} from '@mui/material';
 import { PhotoCamera } from '@mui/icons-material';
 import NavigationIcon from '@mui/icons-material/Navigation';
+import { createTheme } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
+import { ThemeProvider } from '@mui/system';
 
-// import {NavigationIcon} from '@mui/icons-material'
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#eeeeee',
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
+});
 
-function Model({ ...props }) {
-  const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/fox.gltf')
-  const { actions } = useAnimations(animations, group)
-  let [isRunning,setIsRunning] = useState(false)
-  useEffect(() => {
-    console.log(actions)
-    console.log(group)
-    actions.Run.play()
-    // actions.Survey.play()
-    // actions.Walk.play()
-    
-  })
-  useFrame(() => {
-    group.current.rotation.y += 0.01
-  })
-//   scale={0.01}
-  function toggleRun() {
-      isRunning = !isRunning
-      console.log(isRunning)
-      console.log('I am ', actions)
-      if (isRunning) {
-          actions.Run.stop()
-          actions.Survey.play()
-      }
-      else {
-          actions.Survey.stop()
-          actions.Run.play()
-      }
-  }
-  return (
-    <group ref={group} {...props} dispose={null} scale={0.03}  >
-      <group>
-        <group>
-          <primitive object={nodes._rootJoint} />
-          <skinnedMesh geometry={nodes.fox.geometry} material={materials.fox_material} skeleton={nodes.fox.skeleton} onClick={toggleRun}  />
-        </group>
-      </group>
-    </group>
-  )
-}
 
 
 function Home() {
@@ -70,15 +41,6 @@ function Home() {
       }
       return result;
    }
-    
-    // useEffect(() => {
-    //     if (currentUser) {
-    //         navigate('/world')
-    //     }
-    // })
-
-    
-
     const handleSubmit = (e) => {
       e.preventDefault()
       let user = {currentUser}
@@ -121,6 +83,7 @@ function Home() {
         <Model  />
         
       </Suspense>
+      {/* <Torus color={'red'} position={[0, 0, 0]} scale={0.02}  /> */}
       <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI/2} maxPolarAngle={Math.PI/2}/>
       {/* get rid of drag on orbit controls */}
       <ambientLight intensity={0.5} />
@@ -129,27 +92,35 @@ function Home() {
       angle={0.3}
       />
         </Canvas>
-    <div id='gamehubHomeDiv'>
-        <h1 className='h1'>Welcome to GameHub</h1>
-        <p>Choose a username and experience the world of gamehub!</p>
-        <form id='usernameForm' onSubmit={handleSubmit}>
-          <label style={{display:'inline', paddingRight:'5%'}}>Username</label>
-          <TextField id="outlined-basic" label="Username" style={{color:'white'}} value={currentUser} variant="filled" onChange={(e) => setCurrentUser(e.target.value)} />
-          {/* <input
-          type='text'
-          required
-          
-          
-          /> */}
-          <Button onClick={handleSubmit} variant="contained" size="small" color="action" endIcon={<NavigationIcon size="small"  />}>
-  Send
-</Button>
-          {/* <button>Submit</button> */}
-        </form>
         
-        
-        
+        <Grid>
+        <div id='gamehubHomeDiv'>
+  <div id='title'>
+    <h1 className='h1'>Welcome to GameHub</h1>
+    <p>Choose a username and experience the world of gamehub!</p>
     </div>
+    </div>
+        <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto", marginBotton:'10%' }}>
+          <CardContent>
+            <form >
+              <Grid container spacing={1}>
+                <Grid xs={12} sm={12} item>
+                  <TextField placeholder="Enter Username" label="Username" variant="outlined" fullWidth value={currentUser} onChange={(e) => setCurrentUser(e.target.value)}  />
+                </Grid>
+                
+                  
+                <Grid item xs={12}>
+                  <ThemeProvider theme={theme}>
+                   
+                  <Button type="submit" onClick={handleSubmit} variant="contained" color="primary" fullWidth> <NavigationIcon fullWidth/></Button>
+                  </ThemeProvider>
+                </Grid>
+
+              </Grid>
+            </form>
+          </CardContent>
+        </Card>
+      </Grid>
     </>
   )
 }

@@ -5,6 +5,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import * as io from 'socket.io-client'
 import './snake.css'
+
 const BG_COLOR = '#C0C0C0'
 const SNAKE_COLOR = 'red'
 const FOOD_COLOR = 'green'
@@ -34,7 +35,7 @@ function Snake() {
   const joinGameBtn = useRef()
   const gameCodeInput = useRef()
   const gameCodeDisplay = useRef('')
-  const [gameCodeInputValue, setGameCodeInputValue] = useState()
+  const [gameCodeInputValue, setGameCodeInputValue] = useState('')
   let [gameFinished, setGameFinished] = useState(false)
   let [playerResult, setPlayerResult] = useState('Walter')
   let navigate = useNavigate()
@@ -219,6 +220,9 @@ function Snake() {
     navigate('/world')
   }
 
+  function updateGameCodeText(e){
+    console.log()
+  }
   
     return (
       <section >
@@ -233,6 +237,10 @@ function Snake() {
       </div>
       <div >
 
+        
+      <ThemeProvider theme={theme}>
+      <Button onClick={returnHome} size='small' style={{marginLeft:'1%'}} variant="contained" color="neutral">Return Home</Button>
+      </ThemeProvider>
         <div id="initialScreen" ref={initialScreen} >
           <div >
               <h1>Multiplayer Snake</h1>
@@ -249,7 +257,7 @@ function Snake() {
               </button>
               <div>OR</div>
               <div >
-                <input type="text" value={gameCodeInputValue}
+                <input type="text" color='black' value={gameCodeInputValue}
                 onChange={(e) => setGameCodeInputValue(e.target.value)}
                  placeholder="Enter Game Code" id="gameCodeInput" ref={gameCodeInput}/>
               </div>
@@ -263,6 +271,7 @@ function Snake() {
               >
                 Join Game
               </button>
+              
           </div>
         </div>
         <div id='snakeScreen'>

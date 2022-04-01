@@ -251,6 +251,9 @@ function returnHome() {
       <Button onClick={returnHome} size='small' style={{marginLeft:'3%'}} variant="contained" color="neutral">Go back</Button>
       </ThemeProvider>
       </div>
+      <ThemeProvider theme={theme}>
+      <Button onClick={returnHome} size='small' style={{marginLeft:'1%'}} variant="contained" color="neutral">Return Home</Button>
+      </ThemeProvider>
       <div id='snakeScreen'>
         <div id="gameScreen"  ref={gameScreen} >
           <div >

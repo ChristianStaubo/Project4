@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { useState } from 'react';
 import Home from './components/Home';
 import SinglePlayerSnake from './components/SinglePlayerSnake';
+import { Login } from './components/Login';
 
 // useFrame(() => {
   //   console.log(pos)
@@ -18,6 +19,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Home />}></Route>
+      <Route path='/login' element={<Login />}></Route>
 
       <Route path='/multiplayerSnake' element={<Snake  />}> </Route>
 

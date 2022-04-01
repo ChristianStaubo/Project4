@@ -19,21 +19,31 @@ export default function Model({ ...props }) {
     // actions.Walk.play()
     
   })
+  let t = 0
   useFrame(() => {
-    group.current.rotation.y += 0.01
+    // group.current.rotation.y += 0.01
+    group.current.rotation.y += 0.008
+    // t += 0.01;          
+    
+    // group.current.rotation.y += 0.01;
+
+    // group.current.position.x = 2*Math.cos(t) + 0
+    // group.current.position.z = 2*Math.sin(t) + 0
   })
 //   scale={0.01}
-  function toggleRun() {
-      isRunning = !isRunning
-      console.log(isRunning)
-      console.log('I am ', actions)
-      if (isRunning) {
-          actions.Walk.play()
-      }
-      else {
-          actions.Run.play()
-      }
+function toggleRun() {
+  isRunning = !isRunning
+  console.log(isRunning)
+  console.log('I am ', actions)
+  if (isRunning) {
+      actions.Run.stop()
+      actions.Survey.play()
   }
+  else {
+      actions.Survey.stop()
+      actions.Run.play()
+  }
+}
   return (
     <group ref={group} {...props} dispose={null} scale={0.03}  >
       <group>
