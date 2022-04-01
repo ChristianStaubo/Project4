@@ -60,6 +60,16 @@ function Model({ ...props }) {
 function Home() {
     let navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState('')
+
+    function makeRandomUserName(length) {
+      let result = '';
+      let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let charactersLength = characters.length;
+      for ( let i = 0; i < length; i++ ) {
+         result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+   }
     
     // useEffect(() => {
     //     if (currentUser) {
@@ -90,8 +100,18 @@ function Home() {
           console.log('Local user =>', currentUser)
           console.log(localStorage)
           navigate('/world')
-      };
-    })}
+      }
+      
+    })
+    .catch(err => {
+      console.log(err)
+      console.log('Error, cors from your end probably idk why yet. Setting username to be default')
+        let randomUserName = 'User' + makeRandomUserName(8).toString()
+        console.log(randomUserName)
+        localStorage.setItem("currentUser",randomUserName)
+        navigate('/world')
+    })
+  }
     
   return (
     <>
