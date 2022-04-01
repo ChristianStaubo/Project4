@@ -53,18 +53,20 @@ function Leaderboard({topscores}) {
             
           }}
           distanceFactor={2}
-          position={[3.8, 20, -45]}
+          position={[3.8, 32, -45]}
           transform
           occlude
           onOcclude={setVisible}>
         <h1>Snake Leaderboard</h1>
         {topscores &&
-        <h6>  <span style={{fontSize:'200%'}}>1. {topscores[0].user}          {topscores[0].score} points, </span> </h6>
+        <>
+        <h6>  <span style={{fontSize:'200%'}}>1. {topscores[0].user}          {topscores[0].score} points </span> </h6>
+        <h6>  <span style={{fontSize:'200%'}}>2. {topscores[1].user}          {topscores[1].score} points </span> </h6>
+        <h6>  <span style={{fontSize:'200%'}}>3. {topscores[2].user}          {topscores[2].score} points </span> </h6>
+        <h6>  <span style={{fontSize:'200%'}}>4. {topscores[3].user}          {topscores[3].score} points </span> </h6>
+        <h6>  <span style={{fontSize:'200%'}}>5. {topscores[4].user}          {topscores[4].score} points </span> </h6>
+        </>
 }
-        <h6>2.</h6>
-        <h6>3.</h6>
-        <h6>4.</h6>
-        <h6>5.</h6>
         <h6 className='invis'>1</h6>
         <h6 className='invis'>1</h6>
         <h6 className='invis'>1</h6>

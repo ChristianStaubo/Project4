@@ -30,7 +30,7 @@ const FOOD_COLOR = '#66FF99'
 
 function SinglePlayerSnake() {
   let navigate = useNavigate()
-  let currentUser = 'Spiderman'
+  let currentUser = localStorage.currentUser
   let scoreCount = useRef(0)
   let [counter,setCounter] = useState(0)
   let [gameFinished, setGameFinished] = useState(false)
@@ -69,10 +69,13 @@ function SinglePlayerSnake() {
     socket.current.on("connection", () => {
       console.log('Connected to socket')
     })
-    
-    socket.current.emit('singlePlayer', singlePlayer)
+      socket.current.emit('singlePlayer', singlePlayer)
+      socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
     init()
-    socket.current.on('singlePlayergameState', handleSinglePlayerGameState)
+    
+    
+    
+    
   }, [])
 
   
