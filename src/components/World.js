@@ -1,8 +1,6 @@
 import React, { Suspense, useEffect, useState, useRef } from 'react'
 import {Canvas,} from '@react-three/fiber'
-//npm i @react-three/drei
 import {OrbitControls, Stars,} from '@react-three/drei'
-// npm i @react-three/cannon
 import {Physics, useBox, usePlane} from '@react-three/cannon'
 import Torus from './Torus'
 import Player from './Player.js'
@@ -20,6 +18,7 @@ import { useSphere } from '@react-three/cannon';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Vector3 } from 'three';
 import axios from 'axios'
+import Sphere from './Sphere'
 
 
 
@@ -104,6 +103,7 @@ function World() {
       </Suspense> */}
       {/* <OrbitControls /> */}
       <Stars />
+      {/* <Sphere /> */}
       <ambientLight intensity={0.5} />
       <spotLight
       position={[10,15,10]}

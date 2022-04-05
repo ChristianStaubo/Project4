@@ -9,10 +9,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 const torusPos = [10, 10, 10]
 const SPEED = 6;
 
-function Player (props) {
-  // let navigate = useNavigate()
-  
-
+function Player (props) {  
   const { camera } = useThree();
   const { moveForward, moveBackward, moveLeft, moveRight, jump } =
     useKeyboardControls();
