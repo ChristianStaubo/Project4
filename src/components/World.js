@@ -9,7 +9,6 @@ import Plane from './Plane'
 import { useThree, useFrame } from '@react-three/fiber';
 import Snake from './Snake';
 import Leaderboard from './Leaderboard'
-import './world.css'
 import { FPVControls } from './FPVControls'
 import { Navigate, useNavigate } from "react-router-dom";
 import Model from './Fox'

@@ -1,4 +1,4 @@
-#root {
+/* #root {
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -10,8 +10,7 @@
     -ms-user-select: none;
     user-select: none;
     overflow: hidden;
-    /* background: #272727; */
-  }
+  } */
 
 .invis{
     display: none;
