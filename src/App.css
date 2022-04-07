@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
 }
 
@@ -15,9 +15,8 @@ body,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /* overflow: hidden; */
-  /* background: #272727; */
-}
+ 
+} */
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,

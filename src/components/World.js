@@ -1,4 +1,5 @@
 import React, { Suspense, useEffect, useState, useRef } from 'react'
+import AppStyle from '../App.css'
 import {Canvas,} from '@react-three/fiber'
 import {OrbitControls, Stars,} from '@react-three/drei'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
@@ -9,6 +10,7 @@ import Plane from './Plane'
 import { useThree, useFrame } from '@react-three/fiber';
 import Snake from './Snake';
 import Leaderboard from './Leaderboard'
+import './world.css'
 import { FPVControls } from './FPVControls'
 import { Navigate, useNavigate } from "react-router-dom";
 import Model from './Fox'
@@ -37,6 +39,7 @@ function World() {
   let apple = 'apple'
   useEffect(() => {
     getTopScores()
+    set3DCss()
   },[])
   const getTopScores = async () => {
     try {
@@ -80,8 +83,21 @@ function World() {
     }
   },[])
 
+  function set3DCss() {
+    let root = document.getElementById('root')
+    root.style.height = '100vh'
+    root.style.width = '100vw;'
+    // root.style.position = 'absolute;'
+    root.style.margin = '0'
+    root.style.padding = '0'
+    // root.style.
+    // root.style.
+    // // root.style.
+    // console.log(root.style)
+  }
+
   return (
-    <Canvas ref={canvasRef} onKeyDown={handleKeydown} onClick={handleKeydown}>
+    <Canvas id='worldCanvas' ref={canvasRef} onKeyDown={handleKeydown} onClick={handleKeydown}>
      <Physics>
       <Box position={[0,5,0]} color={color} scale={1} mass={1} onClick={toggleColor}/>
       {/* <Box position={[26, 1, -23]} color={'lightgreen'} scale={2} mass={1}/> */}

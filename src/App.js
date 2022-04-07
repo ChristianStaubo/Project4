@@ -1,4 +1,3 @@
-import './App.css';
 import World from './components/World';
 import Snake from './components/Snake';
 import { Route, Routes } from "react-router-dom";

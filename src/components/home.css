@@ -23,12 +23,12 @@ body{
     padding-top: 0%;
 }
 
-  h1{
+  /* h1{
       display: block;
       margin-bottom: 4%;
       font-size: 200%;
       font-family: 'Nixie One', cursive;
-  }
+  } */
 
   #usernameForm{
       
